@@ -1,0 +1,41 @@
+enabled:
+  ingress: true
+  service: true
+env: stage
+config:
+  name: "favorites"
+  keyvals:
+  - dynamodb: "favorites-db-stage"
+  - redis: "favorites-redis-stage"
+  - vpc: "favorites-vpc-stage"
+pod:
+  name: "favorites"
+  label: "favorites"
+  image:
+    name: "favorites-microservice-image-stage"
+    tag: "2.4"
+  port: 6000
+hpa:
+  name: "favorites-hpa"
+  minReplicas: 1
+  maxReplicas: 4
+  cpu_util: 150
+  mem_util: 250
+ingress:
+  name: "favorites-ingress"
+  hostname: "favorites.microservice.com"
+  path: "/"
+  port: 80
+pdb:
+  name: "favorites-pdb"
+  maxUnavailable: 1
+secret:
+  name: "favorites-secret"
+  username: "admin"
+service:
+  name: "favorites-service"
+  port: 80
+  targetPort: 8080
+  type: "LoadBalancer"
+  loadBalancerIP: "192.168.0.100"
+  externalTrafficPolicy: "Local"

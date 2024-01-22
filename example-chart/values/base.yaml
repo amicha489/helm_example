@@ -1,0 +1,7 @@
+enabled:
+  ingress: false
+  role: false
+  secret: false
+  service: false
+  serviceaccount: false
+replicas: 1

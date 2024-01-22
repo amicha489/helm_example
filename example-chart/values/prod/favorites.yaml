@@ -1,0 +1,42 @@
+enabled:
+  ingress: true
+  secret: true
+  service: true
+env: prod
+config:
+  name: "favorites"
+  keyvals:
+  - dynamodb: "favorites-db-prod"
+  - redis: "favorites-redis-prod"
+  - vpc: "favorites-vpc-prod"
+pod:
+  name: "favorites"
+  label: "favorites"
+  image:
+    name: "favorites-microservice-image-prod"
+    tag: "2.4"
+  port: 6000
+hpa:
+  name: "favorites-hpa"
+  minReplicas: 1
+  maxReplicas: 4
+  cpu_util: 150
+  mem_util: 250
+ingress:
+  name: "favorites-ingress"
+  hostname: "favorites.microservice.com"
+  path: "/"
+  port: 80
+pdb:
+  name: "favorites-pdb"
+  maxUnavailable: 1
+secret:
+  name: "favorites-secret"
+  username: "admin"
+service:
+  name: "favorites-service"
+  port: 80
+  targetPort: 8080
+  type: "ClusterIP"
+  clusterIP: "10.0.0.1"
+  sessionAffinity: "ClientIP"

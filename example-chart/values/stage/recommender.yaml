@@ -1,0 +1,23 @@
+env: stage
+config:
+  name: "recommender"
+  keyvals:
+  - dynamodb: "recommender-db-stage"
+  - redis: "recommender-redis-stage"
+  - vpc: "recommender-vpc-stage"
+pod:
+  name: "recommender"
+  label: "recommender"
+  image:
+    name: "recommender-microservice-image-stage"
+    tag: "1.7.6"
+  port: 5211
+hpa:
+  name: "recommender-hpa"
+  minReplicas: 1
+  maxReplicas: 3
+  cpu_util: 50
+  mem_util: 60
+pdb:
+  name: "recommender-pdb"
+  maxUnavailable: 1

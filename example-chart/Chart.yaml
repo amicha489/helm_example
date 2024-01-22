@@ -1,0 +1,6 @@
+apiVersion: v2
+description: Example helm chart for 3 'fictional' microservices (review, recommender, favorites)
+name: example_chart
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

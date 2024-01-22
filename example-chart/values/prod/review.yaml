@@ -1,0 +1,48 @@
+enabled:
+  ingress: true
+  role: true
+  secret: true
+  service: true
+  serviceaccount: true
+env: prod
+config:
+  name: "review"
+  keyvals:
+  - dynamodb: "review-db-prod"
+  - redis: "review-redis-prod"
+  - vpc: "review-vpc-prod"
+pod:
+  name: "review"
+  label: "review"
+  image:
+    name: "review-microservice-image-prod"
+    tag: "1.3.2"
+  port: 5000
+hpa:
+  name: "review-hpa"
+  minReplicas: 1
+  maxReplicas: 4
+  cpu_util: 100
+  mem_util: 200
+ingress:
+  name: "review-ingress"
+  hostname: "review.microservice.com"
+  path: "/"
+  port: 80
+pdb:
+  name: "review-pdb"
+  maxUnavailable: 1
+role:
+  name: "review-role"
+secret:
+  name: "review-secret"
+  username: "admin"
+service:
+  name: "review-service"
+  port: 80
+  targetPort: 8080
+  type: "LoadBalancer"
+  loadBalancerIP: "192.168.0.100"
+  externalTrafficPolicy: "Local"
+serviceaccount:
+  name: "review-sa"

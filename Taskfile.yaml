@@ -1,0 +1,27 @@
+version: 3
+
+tasks:
+  review-prod:
+    desc: "Helm template cmd for review microservice in prod"
+    cmds:
+    - cd example-chart && helm template ./ --values values/base.yaml --values values/prod/review.yaml
+  recommender-prod:
+    desc: "Helm template cmd for recommender microservice in prod"
+    cmds:
+    - cd example-chart && helm template ./ --values values/base.yaml --values values/prod/recommender.yaml
+  favorites-prod:
+    desc: "Helm template cmd for favorites microservice in prod"
+    cmds:
+    - cd example-chart && helm template ./ --values values/base.yaml --values values/prod/favorites.yaml
+  review-stage:
+    desc: "Helm template cmd for review microservice in stage"
+    cmds:
+    - cd example-chart && helm template ./ --values values/base.yaml --values values/stage/review.yaml
+  recommender-stage:
+    desc: "Helm template cmd for recommender microservice in stage"
+    cmds:
+    - cd example-chart && helm template ./ --values values/base.yaml --values values/stage/recommender.yaml
+  favorites-stage:
+    desc: "Helm template cmd for favorites microservice in stage"
+    cmds:
+    - cd example-chart && helm template ./ --values values/base.yaml --values values/stage/favorites.yaml

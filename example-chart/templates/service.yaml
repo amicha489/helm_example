@@ -1,0 +1,24 @@
+{{ if .Values.enabled.service }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.name }}-{{ .Values.env }}
+spec:
+  selector:
+    app: {{ .Values.pod.label }}-{{ .Values.env }}
+  ports:
+  - protocol: TCP
+    port: {{ .Values.service.port }}
+    targetPort: {{ .Values.service.targetPort }}
+  type: {{ .Values.service.type }}
+{{- if eq .Values.service.type "ClusterIP" }}
+  clusterIP: {{ .Values.service.clusterIP }}
+  sessionAffinity: {{ .Values.service.sessionAffinity }}
+{{- else if eq .Values.service.type "NodePort" }}
+  nodePort: {{ .Values.service.nodePort }}
+  externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy }}
+{{- else if eq .Values.service.type "LoadBalancer" }}
+  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
+  externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy }}
+{{- end }}
+{{ end }}

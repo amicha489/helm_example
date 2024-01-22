@@ -1,0 +1,38 @@
+enabled:
+  ingress: true
+  service: true
+env: prod
+config:
+  name: "recommender"
+  keyvals:
+  - dynamodb: "recommender-db-prod"
+  - redis: "recommender-redis-prod"
+  - vpc: "recommender-vpc-prod"
+pod:
+  name: "recommender"
+  label: "recommender"
+  image:
+    name: "recommender-microservice-image-prod"
+    tag: "1.7.5"
+  port: 5100
+hpa:
+  name: "recommender-hpa"
+  minReplicas: 1
+  maxReplicas: 2
+  cpu_util: 50
+  mem_util: 60
+ingress:
+  name: "recommender-ingress"
+  hostname: "recommender.microservice.com"
+  path: "/"
+  port: 88
+pdb:
+  name: "recommender-pdb"
+  maxUnavailable: 1
+service:
+  name: "recommender-service"
+  port: 80
+  targetPort: 8080
+  type: "NodePort"
+  nodePort: 30003
+  externalTrafficPolicy: "Cluster"
